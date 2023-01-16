@@ -7,7 +7,6 @@ on:
     inputs:
       version:
         description: 'The version to tag docker images'
-        required: true
         type: string
 
 jobs:
@@ -42,7 +41,6 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
           GH_ACTOR: ${{ github.actor }}
           GH_PASSWORD: ${{ secrets.GH_PACKAGES }}
-          DOCKER_VERSION: ${{ inputs.version }}
         run: |
           docker pull ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:prod
           docker tag ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:prod ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:$DOCKER_VERSION
@@ -88,7 +86,6 @@ jobs:
         run: |
           docker pull ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:prod
           docker tag ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:prod ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:$DOCKER_VERSION
-          docker push ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:$DOCKER_VERSION
           echo "::set-output name=IMAGE::ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:$DOCKER_VERSION"
 
       - name: Tag WEB
@@ -116,6 +113,5 @@ jobs:
         run: |
           docker pull ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:prod
           docker tag ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:prod ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:$DOCKER_VERSION
-          docker push ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:$DOCKER_VERSION
           echo "::set-output name=IMAGE::ghcr.io/$REGISTRY_OWNER/$DOCKER_NAME:$DOCKER_VERSION"
 
